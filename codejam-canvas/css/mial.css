@@ -1,0 +1,158 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    margin: 0;
+    width: 100%;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 48px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.24), 0px 0px 4px rgba(0, 0, 0, 0.12);
+}
+
+main {
+    width: 100%;
+}
+
+.nav_icon {
+    height: 40px;
+    margin: 4px;
+}
+
+.nav_icon img {
+    height: auto;
+    padding: 8px;
+}
+
+.main_title {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1em;
+    line-height: 23px;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+    margin: 75px auto;
+}
+
+.tools_area {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 600px;
+}
+
+.bar {
+    width: 228px;
+    height: 246px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.24),
+        0px 0px 4px rgba(0, 0, 0, 0.12);
+}
+
+.tool_section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 50%;
+}
+
+.color_section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 50%;
+}
+
+.draw_tool {
+    border-bottom: solid 1px rgba(0, 0, 0, 0.12);
+}
+
+.color_now {
+    border-bottom: solid 1px rgba(0, 0, 0, 0.12);
+}
+
+.tool {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+    color: rgba(0, 0, 0, 0.541327);
+}
+
+.color {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+    color: rgba(0, 0, 0, 0.541327);
+}
+
+.tool img {
+    margin-right: 35px;
+}
+
+.color label {
+    margin-right: 35px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: solid 1px black;
+}
+
+.color input {
+    display: none;
+}
+
+.canvas_area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 15px;
+    width: 80%;
+}
+
+.canvas {
+    width: 512px;
+    height: 512px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.24),
+        0px 0px 4px rgba(0, 0, 0, 0.12);
+}
+
+.button_area {
+    display: flex;
+    justify-content: space-around;
+    width: 40%;
+    margin: 15px 30px;
+}
+
+.button {
+    padding: 5px 15px;
+    margin: 5px;
+    border: solid 1px black;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.24),
+        0px 0px 4px rgba(0, 0, 0, 0.12);
+    font-size: 1em;
+}
+
+.button:hover {
+    background: #aaaaaa;
+}
