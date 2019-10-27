@@ -129,6 +129,16 @@ main {
     width: 80%;
 }
 
+.change_size {
+    display: flex;
+    padding: 5px;
+}
+
+.change_size h4 {
+    padding: 5px;
+    margin-left: 15px;
+}
+
 .canvas {
     width: 512px;
     height: 512px;
