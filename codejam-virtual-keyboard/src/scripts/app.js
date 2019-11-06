@@ -33,32 +33,32 @@ const ROW2 = [
 
 const ROW3 = [
     ['CapsLock', 'CapsLock', 'CapsLock', 'CapsLock', 'CapsLock'],
-    ['KeyA', 'a', 'A', '1', 'Ё'],
-    ['KeyS', 's', 'S', '2', 'Ё'],
-    ['KeyD', 'd', 'D', '3', 'Ё'],
-    ['KeyF', 'f', 'F', '4', 'Ё'],
-    ['KeyG', 'g', 'G', '5', 'Ё'],
-    ['KeyH', 'h', 'H', '6', 'Ё'],
-    ['KeyJ', 'j', 'J', '7', 'Ё'],
-    ['KeyK', 'k', 'K', '8', 'Ё'],
-    ['KeyL', 'l', 'L', '9', 'Ё'],
-    ['Semicolon', ';', ':', '0', 'Ё'],
-    ['Quotes', '\'', '"', '-', '_'],
+    ['KeyA', 'a', 'A', 'ф', 'Ф'],
+    ['KeyS', 's', 'S', 'ы', 'Ы'],
+    ['KeyD', 'd', 'D', 'в', 'В'],
+    ['KeyF', 'f', 'F', 'а', 'А'],
+    ['KeyG', 'g', 'G', 'п', 'П'],
+    ['KeyH', 'h', 'H', 'р', 'Р'],
+    ['KeyJ', 'j', 'J', 'о', 'О'],
+    ['KeyK', 'k', 'K', 'л', 'Л'],
+    ['KeyL', 'l', 'L', 'д', 'Д'],
+    ['Semicolon', ';', ':', 'ж', 'Ж'],
+    ['Quotes', '\'', '"', 'э', 'Э'],
     ['Enter', 'Enter', 'Enter', 'Enter', 'Enter']
 ]
 
 const ROW4 = [
     ['ShiftLeft Shift', 'Shift', 'Shift', 'Shift', 'Shift'],
-    ['KeyZ', 'z', 'Z', '1', 'Ё'],
-    ['KeyX', 'x', 'X', '2', 'Ё'],
-    ['KeyC', 'c', 'C', '3', 'Ё'],
-    ['KeyV', 'v', 'V', '4', 'Ё'],
-    ['KeyB', 'b', 'B', '5', 'Ё'],
-    ['KeyN', 'n', 'N', '6', 'Ё'],
-    ['KeyM', 'm', 'M', '7', 'Ё'],
-    ['Comma', ',', '<', '8', 'Ё'],
-    ['Period', '.', '>', '9', 'Ё'],
-    ['Slash', '/', '?', '0', 'Ё'],
+    ['KeyZ', 'z', 'Z', 'я', 'Я'],
+    ['KeyX', 'x', 'X', 'ч', 'Ч'],
+    ['KeyC', 'c', 'C', 'с', 'С'],
+    ['KeyV', 'v', 'V', 'м', 'М'],
+    ['KeyB', 'b', 'B', 'и', 'И'],
+    ['KeyN', 'n', 'N', 'т', 'Т'],
+    ['KeyM', 'm', 'M', 'ь', 'Ь'],
+    ['Comma', ',', '<', 'б', 'Б'],
+    ['Period', '.', '>', 'ю', 'Ю'],
+    ['Slash', '/', '?', '.', ','],
     ['ArrowUp', '↑', '↑', '↑', '↑'],
     ['ShiftRight Shift', 'Shift', 'Shift', 'Shift', 'Shift']
 ]
@@ -105,26 +105,24 @@ window.onload = function () {
     createRow('row4', row4, ROW4);
     createRow('row5', row5, ROW5);
 }
+if (localStorage.lang === undefined) {
+    localStorage.lang = 1;
+}
 
 function createRow(rowName, rowWrapper, rowValue) {
     rowWrapper.className = rowName + ' row';
     rowValue.forEach(elem => {
         let key = document.createElement('div');
         rowWrapper.append(key);
-        key.innerText = elem[1];
+        key.innerText = elem[localStorage.lang];
         key.className = elem[0] + ' key';
     });
 }
 
 function changRegister(rowName, rowValue, shiftState, capsState) {
-    let registerIndex = 1;
-    if (shiftState) {
-        registerIndex = 2;
-    }
-    if (capsState && !shiftState) {
-        registerIndex = 2;
-    } else if (capsState && shiftState) {
-        registerIndex = 1;
+    let registerIndex = shiftState ? +localStorage.lang + 1 : localStorage.lang;
+    if (capsState) {
+        registerIndex = shiftState ? localStorage.lang : +localStorage.lang + 1;
     }
     const row = document.querySelector(`.${rowName}`);
     row.childNodes.forEach((key, index) => {
@@ -174,6 +172,9 @@ document.addEventListener('keydown', function (event) {
                     break;
                 case 'AltRight':
                     break;
+                case 'MetaLeft':
+                    localStorage.lang = localStorage.lang == 1 ? 3 : 1;
+                    break;
                 default:
                     msg = textArea.value + key.innerText;
                     break;
@@ -197,6 +198,10 @@ document.addEventListener('keyup', function (event) {
         }
         if (event.code.includes('Shift')) {
             shiftState = false;
+        }
+        if (event.code.includes('CapsLock') && capsState) {
+            key.querySelector('.CapsLock').style.borderRadius = '20px';
+            key.querySelector('.CapsLock').style.background = '#346bd1';
         }
     })
     changRegister('row1', ROW1, shiftState);
@@ -242,6 +247,9 @@ body.addEventListener('mousedown', function (event) {
                 break;
             case 'AltRight':
                 break;
+            case 'MetaLeft':
+                localStorage.lang = localStorage.lang == 1 ? 3 : 1;
+                break;
             default:
                 msg = textArea.value + document.querySelector('.' + value).innerText;
                 shiftState = false;
@@ -251,7 +259,7 @@ body.addEventListener('mousedown', function (event) {
                 });
                 break;
         }
-        
+
         changRegister('row1', ROW1, shiftState);
         changRegister('row2', ROW2, shiftState, capsState);
         changRegister('row3', ROW3, shiftState, capsState);
