@@ -11,13 +11,17 @@ canvas.width = 512;
 
 let typeMatrix = '';
 
-function changeSize() {
-    canvas.height = range.value;
-    canvas.width = range.value;
-    canvas.style.width = `${range.value}px`;
-    canvas.style.height = `${range.value}px`;
+range.addEventListener('change', () => {
+    changeSize(range);
+});
+
+function changeSize(rangeInput) {
+    canvas.height = rangeInput.value;
+    canvas.width = rangeInput.value;
+    canvas.style.width = `${rangeInput.value}px`;
+    canvas.style.height = `${rangeInput.value}px`;
     span.forEach(e => {
-        e.innerHTML = range.value;
+        e.innerHTML = rangeInput.value;
     });
     drawMatrix(typeMatrix);
 }
@@ -35,11 +39,10 @@ function readTextFile(file, callback) {
     rawFile.send(null);
 }
 
-function drawMatrix(size) {
+function drawMatrix(typeMatrix) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    if (size === 'png') {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (typeMatrix === 'png') {
         const img = new Image();
         img.src = './data/image.png';
         img.onload = function () {
@@ -48,14 +51,14 @@ function drawMatrix(size) {
     } else {
         readTextFile("./data/matrix.json", function (text) {
             const arrays = JSON.parse(text);
-            let data = size === '4x4' ? arrays[0] : arrays[1];
+            let data = typeMatrix === '4x4' ? arrays[0] : arrays[1];
             let heightPixel = canvas.height / data.length;
             let widthPixel = canvas.width / data[0].length;
             let y = 0;
             let x = 0;
             data.forEach(element => {
                 element.forEach(e => {
-                    ctx.fillStyle = size === '4x4' ? `#${e}` : `rgba(${e[0]}, ${e[1]}, ${e[2]}, ${e[3] / 255})`;
+                    ctx.fillStyle = typeMatrix === '4x4' ? `#${e}` : `rgba(${e[0]}, ${e[1]}, ${e[2]}, ${e[3] / 255})`;
                     ctx.fillRect(x, y, widthPixel, heightPixel);
                     x += widthPixel;
                 });
