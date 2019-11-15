@@ -1,3 +1,6 @@
+const EN_LANG_INDEX = 1;
+const RU_LANG_INDEX = 3;
+
 const ROW1 = [
     ['Backquote', '`', '~', 'ё', 'Ё'],
     ['Digit1', '1', '!', '1', '!'],
@@ -75,38 +78,33 @@ const ROW5 = [
     ['ControlRight Control', 'Ctrl', 'Ctrl', 'Ctrl', 'Ctrl']
 ]
 
+const keyboardArr = [ROW1, ROW2, ROW3, ROW4, ROW5];
+
 let msg = '';
 let shiftState = false;
 let capsState = false;
 
-window.onload = function () {
-    let textArea = document.createElement('textarea');
-    let keyboard = document.createElement('div');
-    document.body.append(textArea);
-    document.body.append(keyboard);
-    textArea.className = 'text_area';
-    keyboard.className = 'keyboard';
-
-    textArea.blur();
-
-    let row1 = document.createElement('div');
-    let row2 = document.createElement('div');
-    let row3 = document.createElement('div');
-    let row4 = document.createElement('div');
-    let row5 = document.createElement('div');
-    keyboard.append(row1);
-    keyboard.append(row2);
-    keyboard.append(row3);
-    keyboard.append(row4);
-    keyboard.append(row5);
-    createRow('row1', row1, ROW1);
-    createRow('row2', row2, ROW2);
-    createRow('row3', row3, ROW3);
-    createRow('row4', row4, ROW4);
-    createRow('row5', row5, ROW5);
-}
 if (localStorage.lang === undefined) {
-    localStorage.lang = 1;
+    localStorage.lang = EN_LANG_INDEX;
+}
+
+function renderKeyboard() {
+    window.onload = function () {
+        let textArea = document.createElement('textarea');
+        let keyboard = document.createElement('div');
+        document.body.append(textArea);
+        document.body.append(keyboard);
+        textArea.className = 'text_area';
+        keyboard.className = 'keyboard';
+
+        textArea.blur();
+
+        keyboardArr.forEach((rowArr, index) => {
+            let row = document.createElement('div');
+            keyboard.append(row);
+            createRow(`row${index + 1}`, row, rowArr);
+        })
+    }
 }
 
 function createRow(rowName, rowWrapper, rowValue) {
@@ -119,166 +117,139 @@ function createRow(rowName, rowWrapper, rowValue) {
     });
 }
 
-function changRegister(rowName, rowValue, shiftState, capsState) {
-    let registerIndex = shiftState ? +localStorage.lang + 1 : localStorage.lang;
+function changeRegister(rowName, rowValue, shiftState, capsState) {
+    let registerIndex = shiftState ? Number(localStorage.lang) + 1 : localStorage.lang;
     if (capsState) {
-        registerIndex = shiftState ? localStorage.lang : +localStorage.lang + 1;
+        registerIndex = shiftState ? localStorage.lang : Number(localStorage.lang) + 1;
     }
-    const row = document.querySelector(`.${rowName}`);
+    let row = document.querySelector(`.${rowName}`);
     row.childNodes.forEach((key, index) => {
         key.innerText = rowValue[index][registerIndex];
     })
 }
 
-document.addEventListener('keydown', function (event) {
-    const textArea = document.querySelector('.text_area');
-    textArea.blur();
+function print(input, key, keyValue, keyboardType, selectionText) {
+    key.classList.add('active_key');
 
-    const rows = document.querySelectorAll('.key');
+    switch (keyValue) {
+        case 'Backspace':
+            if (selectionText.start === selectionText.end) {
+                msg = input.value.slice(0, selectionText.end - 1);
+            }
+            else {
+                msg = input.value.slice(0, selectionText.start) + input.value.slice(selectionText.end);
+            }
+            break;
+        case 'Enter':
+            msg = input.value + '\n';
+            break;
+        case 'Tab':
+            msg = input.value + '\t';
+            break;
+        case 'CapsLock':
+            capsState = !capsState;
+            break;
+        case 'ShiftLeft':
+        case 'ShiftRight':
+            if (keyboardType === 'physical') {
+                shiftState = true;
+            }
+            if (keyboardType === 'virtual') {
+                shiftState = !shiftState;
+            }
+            break;
+        case 'Space':
+            msg = input.value + ' ';
+            break;
+        case 'ControlLeft':
+        case 'ControlRight':
+        case 'AltLeft':
+        case 'AltRight':
+            break;
+        case 'MetaLeft':
+            localStorage.lang = localStorage.lang == EN_LANG_INDEX ? RU_LANG_INDEX : EN_LANG_INDEX;
+            break;
+        default:
+            if (keyboardType === 'physical') {
+                msg = input.value + key.innerText;
+            }
+            if (keyboardType === 'virtual') {
+                msg = input.value + document.querySelector('.' + keyValue).innerText;
+                shiftState = false;
+                document.querySelectorAll('.Shift').forEach(elem => {
+                    elem.classList.remove('active_key');
+                });
+            }
+            break;
+    }
+    input.value = msg;
+    changeRegister('row1', ROW1, shiftState);
+    changeRegister('row2', ROW2, shiftState, capsState);
+    changeRegister('row3', ROW3, shiftState, capsState);
+    changeRegister('row4', ROW4, shiftState, capsState);
+}
+
+renderKeyboard();
+
+document.addEventListener('keydown', function (event) {
+    let textArea = document.querySelector('.text_area');
+    let rows = document.querySelectorAll('.key');
+    textArea.blur();
+    let selectionText = {
+        start: textArea.selectionStart,
+        end: textArea.selectionEnd
+    }
     rows.forEach(key => {
         if (key.className.includes(event.code)) {
-            key.style.borderRadius = '20px';
-            key.style.background = '#346bd1';
-            let value = event.code;
-            switch (value) {
-                case 'Backspace':
-                    msg = textArea.value.slice(0, -1);
-                    break;
-                case 'Enter':
-                    msg = textArea.value + '\n';
-                    break;
-                case 'Tab':
-                    textArea.focus();
-                    msg = textArea.value + '\t';
-                    textArea.blur();
-                    break;
-                case 'CapsLock':
-                    capsState = capsState ? false : true;
-                    break;
-                case 'ShiftLeft':
-                    shiftState = true;
-                    break;
-                case 'ShiftRight':
-                    shiftState = true;
-                    break;
-                case 'Space':
-                    msg = textArea.value + ' ';
-                    break;
-                case 'ControlLeft':
-                    break;
-                case 'ControlRight':
-                    break;
-                case 'AltLeft':
-                    break;
-                case 'AltRight':
-                    break;
-                case 'MetaLeft':
-                    localStorage.lang = localStorage.lang == 1 ? 3 : 1;
-                    break;
-                default:
-                    msg = textArea.value + key.innerText;
-                    break;
-            }
-            textArea.value = msg;
-            changRegister('row1', ROW1, shiftState);
-            changRegister('row2', ROW2, shiftState, capsState);
-            changRegister('row3', ROW3, shiftState, capsState);
-            changRegister('row4', ROW4, shiftState, capsState);
+            let keyValue = event.code;
+            let keyboardType = 'physical';
+            print(textArea, key, keyValue, keyboardType, selectionText);
         }
     })
 });
 
 document.addEventListener('keyup', function (event) {
 
-    const rows = document.querySelectorAll('.key');
+    let rows = document.querySelectorAll('.key');
     rows.forEach(key => {
         if (key.className.includes(event.code)) {
-            key.style.borderRadius = '7px';
-            key.style.background = '#6094f3';
+            key.classList.remove('active_key');
         }
         if (event.code.includes('Shift')) {
             shiftState = false;
         }
         if (event.code.includes('CapsLock') && capsState) {
-            key.querySelector('.CapsLock').style.borderRadius = '20px';
-            key.querySelector('.CapsLock').style.background = '#346bd1';
+            key.querySelector('.CapsLock').classList.add('active_key');
         }
     })
-    changRegister('row1', ROW1, shiftState);
-    changRegister('row2', ROW2, shiftState, capsState);
-    changRegister('row3', ROW3, shiftState, capsState);
-    changRegister('row4', ROW4, shiftState, capsState);
+    changeRegister('row1', ROW1, shiftState);
+    changeRegister('row2', ROW2, shiftState, capsState);
+    changeRegister('row3', ROW3, shiftState, capsState);
+    changeRegister('row4', ROW4, shiftState, capsState);
 });
-
+ 
 let body = document.querySelector('body');
 body.addEventListener('mousedown', function (event) {
-    const textArea = document.querySelector('.text_area');
+    let textArea = document.querySelector('.text_area');
     let value = event.target.className.split(' ')[0];
     if (event.target.className.includes('key') && event.target.className !== 'keyboard') {
-        event.target.style.borderRadius = '20px';
-        event.target.style.background = '#346bd1';
-        switch (value) {
-            case 'Backspace':
-                msg = textArea.value.slice(0, -1);
-                break;
-            case 'Enter':
-                msg = textArea.value + '\n';
-                break;
-            case 'Tab':
-                msg = textArea.value + '\t';
-                break;
-            case 'CapsLock':
-                capsState = capsState ? false : true;
-                break;
-            case 'ShiftLeft':
-                shiftState = shiftState ? false : true;
-                break;
-            case 'ShiftRight':
-                shiftState = shiftState ? false : true;
-                break;
-            case 'Space':
-                msg = textArea.value + ' ';
-                break;
-            case 'ControlLeft':
-                break;
-            case 'ControlRight':
-                break;
-            case 'AltLeft':
-                break;
-            case 'AltRight':
-                break;
-            case 'MetaLeft':
-                localStorage.lang = localStorage.lang == 1 ? 3 : 1;
-                break;
-            default:
-                msg = textArea.value + document.querySelector('.' + value).innerText;
-                shiftState = false;
-                document.querySelectorAll('.Shift').forEach(elem => {
-                    elem.style.borderRadius = '7px';
-                    elem.style.background = '#6094f3';
-                });
-                break;
+        let keyboardType = 'virtual';
+        let selectionText = {
+            start: textArea.selectionStart,
+            end: textArea.selectionEnd
         }
-
-        changRegister('row1', ROW1, shiftState);
-        changRegister('row2', ROW2, shiftState, capsState);
-        changRegister('row3', ROW3, shiftState, capsState);
-        changRegister('row4', ROW4, shiftState, capsState);
-        textArea.value = msg;
+        print(textArea, event.target, value, keyboardType, selectionText);
     }
 });
 
 body.addEventListener('mouseup', function (event) {
     if (event.target.className.includes('key') && event.target.className !== 'keyboard') {
-        event.target.style.borderRadius = '7px';
-        event.target.style.background = '#6094f3';
+        event.target.classList.remove('active_key');
     }
     if (shiftState) {
-        event.target.style.borderRadius = '20px';
-        event.target.style.background = '#346bd1';
+        event.target.classList.add('active_key');
     }
     if (event.target.className.includes('CapsLock') && capsState) {
-        event.target.style.borderRadius = '20px';
-        event.target.style.background = '#346bd1';
+        event.target.classList.add('active_key');
     }
 });
