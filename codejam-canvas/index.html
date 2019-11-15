@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/main.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <header>
+        <div class="nav_icon">
+            <img src="./assets/menu.svg" alt="">
+        </div>
+        <div class="main_title">
+            <h1>CodeJam - Pallete</h1>
+        </div>
+        <div class="menu_icon"></div>
+    </header>
+    <main>
+        <div class="wrapper">
+            <div class="tools_area">
+                <div class="tool_bar bar">
+                    <div class="draw_tool tool_section">
+                        <div class="paint_bucket tool">
+                            <img src="./assets/fill-drip.svg" alt="">
+                            <h3>Paint bucket</h3>
+                        </div>
+                        <div class="choose_color tool">
+                            <img src="./assets/eye-dropper.svg" alt="">
+                            <h3>Choose color</h3>
+                        </div>
+                    </div>
+                    <div class="move_tool tool_section">
+                        <div class="paint_bucket tool">
+                            <img src="./assets/arrows-alt.svg" alt="">
+                            <h3>Move</h3>
+                        </div>
+                        <div class="paint_bucket tool">
+                            <img src="./assets/exchange-alt.svg" alt="">
+                            <h3>Transform</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="color_bar bar">
+                    <div class="color_now color_section">
+                        <div class="paint_bucket color">
+                            <label for="current" style="background: #aaaaaa;">
+                                <input type="color" value="#aaaaaa" name="" id="current">
+                            </label>
+                            <h3>Current color</h3>
+                        </div>
+                        <div class="choose_color color">
+                            <label for="prev" style="background: #44f817;">
+                                <input type="color" value="#44f817" name="" id="prev">
+                            </label>
+                            <h3>Prev color</h3>
+                        </div>
+                    </div>
+                    <div class="choose_color color_section">
+                        <div class="paint_bucket color">
+                            <label for="red" style="background: #ff0000;">
+                                <input type="color" value="#ff0000" name="" id="red">
+                            </label>
+                            <h3>red</h3>
+                        </div>
+                        <div class="paint_bucket color">
+                            <label for="blue" style="background: #0084ff;">
+                                <input type="color" value="#0084ff" name="" id="blue">
+                            </label>
+                            <h3>blue</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="canvas_area">
+                <div class="change_size">
+                    <input type="range" value="512" min="256" max="512" step="4" name=""
+                        id="range">
+                    <h4>Size: <span>512</span>x<span>512</span></h4>
+                </div>
+
+                <canvas class="canvas">
+
+                </canvas>
+                <div class="button_area">
+                    <button class="size_4x4 button">4x4</button>
+                    <button class="size_32x32 button">32x32</button>
+                    <button class="png button">PNG</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="./index.js"></script>
+</body>
+
+</html>
