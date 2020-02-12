@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PISKEL CLONE</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/5a0df4d713.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header>
+        <div class="main_title">
+            <a href="./index.html">
+                <h1>PISKEL CLONE</h1>
+            </a>
+        </div>
+        <div class="menu_icon"></div>
+    </header>
+    <main>
+        <div class="wrapper">
+            <div class="tools_area">
+                <div class="pixel_size bar">
+                    <button class="pixel_1" data-tooltip="Pen size 1">
+                        <div></div>
+                    </button>
+                    <button class="pixel_2" data-tooltip="Pen size 2">
+                        <div></div>
+                    </button>
+                    <button class="pixel_3" data-tooltip="Pen size 3">
+                        <div></div>
+                    </button>
+                    <button class="pixel_4" data-tooltip="Pen size 4">
+                        <div></div>
+                    </button>
+                </div>
+                <div class="tool_bar bar">
+                    <div class="draw_tool tool_section">
+                        <button class="bucket tool">
+                            <i class="fas fa-fill-drip fa-fw"></i>
+                            <!-- <h3>Fill bucket</h3> -->
+                        </button>
+                        <button class="bucket_all tool">
+                            <i class="fas fa-tint fa-fw"></i>
+                            <!-- <h3>Fill all pixel</h3> -->
+                        </button>
+                        <button class="eyedropper tool">
+                            <i class="fas fa-eye-dropper fa-fw"></i>
+                            <!-- <h3>Choose color</h3> -->
+                        </button>
+                        <button class="pencil tool">
+                            <i class="fas fa-pencil-alt fa-fw"></i>
+                            <!-- <h3>Pencil</h3> -->
+                        </button>
+                        <button class="eraser tool">
+                            <i class="fas fa-eraser fa-fw"></i>
+                            <!-- <h3>Eraser</h3> -->
+                        </button>
+                    </div>
+                </div>
+                <div class="color_bar bar">
+                    <div class="color_now color_section">
+                        <button class="current_color color">
+                            <label for="current">
+                                <input type="color" value="#ff0000" id="current">
+                            </label>
+                            <h3>Current color</h3>
+                        </button>
+                        <button class="swap_color"><i class="fas fa-exchange-alt fa-rotate-90"></i></button>
+                        <button class="prev_color color">
+                            <label for="prev" style="background: #44f817;">
+                                <input type="color" value="#44f817" id="prev">
+                            </label>
+                            <h3>Prev color</h3>
+                        </button>
+                    </div>
+                    <!-- <div class="palette">
+                        <button class="red_color color_choose">
+                            <label for="red" style="background: #ff0000;">
+                            </label>
+                        </button>
+                        <button class="blue_color color_choose">
+                            <label for="blue" style="background: #0000ff;">
+                            </label>
+                        </button>
+                    </div> -->
+                </div>
+                <button class="open_button">
+                    <i class="fas fa-keyboard"></i>
+                </button>
+            </div>
+            <div class="frame_area">
+                <ul class="frame__list_area"></ul>
+            </div>
+            <div class="canvas_area">
+                <canvas class="canvas">
+
+                </canvas>
+                <div class="button_area">
+                    <button class="size_32x32 button size_button">32x32</button>
+                    <button class="size_64x64 button size_button">64x64</button>
+                    <button class="size_128x128 button size_button">128x128</button>
+                </div>
+            </div>
+            <div class="animation_area">
+                <div class="canvas__animation_area">
+                    <i class="fas fa-expand-arrows-alt fullscreen_button"></i>
+                    <canvas class="animation_canvas"></canvas>
+                </div>
+                <div class="fps__change_area">
+                    <span class="FPS_label">FPS: </span>
+                    <input type="range" value="5" min="1" max="24" step="1" id="FPS_range">
+                </div>
+                <div class="save_area">
+                    <button class="save_as_gif button">Save As .GIF</button>
+                    <button class="save_as_apng button">Save As .APNG</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div class="modal_window closed">
+        <button class="close_button">
+            <i class="far fa-window-close"></i>
+        </button>
+        <div class="modal__window_content">
+            <div class="tool__keyboard_shortcuts">
+                <h2>Tool</h2>
+                <ul class="list__keyboard_shortcuts">
+                    <li>
+                        <span class="cheatsheet_key">
+                        </span>
+                        <span>Fill bucket</span>
+                    </li>
+                    <li>
+                        <span class="cheatsheet_key">
+                        </span>
+                        <span>Fill all pixel</span>
+                    </li>
+                    <li>
+                        <span class="cheatsheet_key">
+                        </span>
+                        <span>Choose color</span>
+                    </li>
+                    <li>
+                        <span class="cheatsheet_key">
+                        </span>
+                        <span>Pencil</span>
+                    </li>
+                    <li>
+                        <span class="cheatsheet_key">
+                        </span>
+                        <span>Eraser</span>
+                    </li>
+                    <li>
+                        <span class="cheatsheet_key">
+                        </span>
+                        <span>Swap color</span>
+                    </li>
+                    <li>
+                        <span class="cheatsheet_key">
+                        </span>
+                        <span>Increase pixel size</span>
+                    </li>
+                    <li>
+                        <span class="cheatsheet_key">
+                        </span>
+                        <span>Decrease pixel size</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="frames__keyboard_shortcuts">
+                <h2>Frames</h2>
+                <ul class="list__keyboard_shortcuts">
+                    <li>
+                        <span class="cheatsheet_key">
+                        </span>
+                        <span>Create new frame</span>
+                    </li>
+                    <li>
+                        <span class="cheatsheet_key">
+                        </span>
+                        <span>Delete frame</span>
+                    </li>
+                    <li>
+                        <span class="cheatsheet_key">
+                        </span>
+                        <span>Duplicate frame</span>
+                    </li>
+                    <li>
+                        <span class="cheatsheet_key">
+                        </span>
+                        <span>Next frame</span>
+                    </li>
+                    <li>
+                        <span class="cheatsheet_key">
+                        </span>
+                        <span>Prev Frame</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="other__keyboard_shortcuts">
+                <h2>Other</h2>
+                <ul class="list__keyboard_shortcuts">
+                    <li>
+                        <span class="cheatsheet_key">
+                        </span>
+                        <span>Save as .gif</span>
+                    </li>
+                    <li>
+                        <span class="cheatsheet_key">
+                        </span>
+                        <span>Save as .apng</span>
+                    </li>
+                    <li>
+                        <span class="cheatsheet_key">
+                        </span>
+                        <span>Fullscreen animation</span>
+                    </li>
+                    <li>
+                        <span class="cheatsheet_key">
+                        </span>
+                        <span>Cheatsheet key</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="modal_overlay closed"></div>
+</body>
+
+</html>

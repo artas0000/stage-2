@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Palette</title>
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+        <script src="https://use.fontawesome.com/23c70673b9.js"></script>
+        <script src="./bundle.js"></script>
+    </head>
+    <body>
+        <header>
+            <div class="nav_icon">
+                <img src="../assets/menu.svg" alt="">
+            </div>
+            <div class="main_title">
+                <h1>CodeJam - Pallete</h1>
+            </div>
+            <div class="menu_icon"></div>
+        </header>
+        <main>
+            <div class="wrapper">
+                <div class="tools_area">
+                    <div class="tool_bar bar">
+                        <div class="draw_tool tool_section">
+                            <button class="bucket tool">
+                                <i class="fa fa-tint fa-fw"></i>
+                                <h3>Fill bucket</h3>
+                            </button>
+                            <button class="eyedropper tool">
+                                <i class="fa fa-eyedropper fa-fw"></i>
+                                <h3>Choose color</h3>
+                            </button>
+                            <button class="pencil tool">
+                                <i class="fa fa-pencil fa-fw"></i>
+                                <h3>Pencil</h3>
+                            </button>
+                        </div>
+                        <div class="move_tool tool_section">
+                            <button class="transform tool">
+                                <i class="fa fa-exchange fa-fw"></i>
+                                <h3>Transform</h3>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="color_bar bar">
+                        <div class="color_now color_section">
+                            <button class="current_color color">
+                                <label for="current">
+                                    <input type="color" value="#00ff00" id="current">
+                                </label>
+                                <h3>Current color</h3>
+                            </button>
+                            <button class="prev_color color">
+                                <label for="prev" style="background: #44f817;">
+                                    <input type="color" value="#44f817" id="prev">
+                                </label>
+                                <h3>Prev color</h3>
+                            </button>
+                        </div>
+                        <div class="choose_color color_section">
+                            <button class="red_color color">
+                                <label for="red" style="background: #ff0000;">
+                                </label>
+                                <h3>red</h3>
+                            </button>
+                            <button class="blue_color color">
+                                <label for="blue" style="background: #0000ff;">
+                                </label>
+                                <h3>blue</h3>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="canvas_area">
+                    <div class="change_size">
+                        <input type="range" value="512" min="256" max="512" step="4"
+                            id="range">
+                        <h4>Size: <span>512</span>x<span>512</span></h4>
+                    </div>
+    
+                    <canvas class="canvas">
+    
+                    </canvas>
+                    <div class="button_area">
+                        <button class="size_4x4 button">4x4</button>
+                        <button class="size_32x32 button">32x32</button>
+                        <button class="size_64x64 button">64x64</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>
